@@ -9,7 +9,6 @@ import SwapiService from "../../services/swapi-service";
 
 export default class PeoplePage extends Component {
   swapiService = new SwapiService();
-
   state = {
     selectedPerson: 3,
     hasError: false
