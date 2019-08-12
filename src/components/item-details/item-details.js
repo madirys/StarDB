@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
-import "./person-details.css";
+import "./item-details.css";
 import SwapiService from "../../services/swapi-service";
 import ErrorButton from "../error-button/error-button";
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
   swapiService = new SwapiService();
 
   state = {
-    person: null
+    item: null
   };
 
   componentDidMount() {
@@ -16,34 +16,34 @@ export default class PersonDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.personId !== prevProps.personId) {
+    if (this.props.itemId !== prevProps.itemId) {
       this.updatePerson();
     }
   }
 
   updatePerson() {
-    const { personId } = this.props;
-    if (!personId) {
+    const { itemId } = this.props;
+    if (!itemId) {
       return;
     }
 
-    this.swapiService.getPerson(personId).then(person => {
-      this.setState({ person });
+    this.swapiService.getPerson(itemId).then(item => {
+      this.setState({ item });
     });
   }
 
   render() {
-    const { person } = this.state;
-    if (!person) {
-      return <span>Select a person from a list</span>;
+    const { item } = this.state;
+    if (!item) {
+      return <span>Select a item from a list</span>;
     }
 
-    const { id, name, gender, birthYear, eyeColor } = person;
+    const { id, name, gender, birthYear, eyeColor } = item;
 
     return (
-      <div className="person-details card">
+      <div className="item-details card">
         <img
-          className="person-image"
+          className="item-image"
           src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
           alt="character"
         />
