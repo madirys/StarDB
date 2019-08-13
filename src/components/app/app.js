@@ -4,6 +4,7 @@ import Header from "../header";
 import ErrorBoundry from "../error-boundry";
 import Row from "../row";
 import ItemDetails, { Record } from "../item-details";
+import ItemList from "../item-list";
 
 import SwapiService from "../../services/swapi-service";
 
@@ -27,7 +28,15 @@ export default class App extends Component {
   render() {
     // const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
 
-    const { getPerson, getStarship } = this.swapiService;
+    const {
+      getPerson,
+      getStarship,
+      getAllPeople,
+      getAllPlanets,
+      getPlanet,
+      getAllStarships
+    } = this.swapiService;
+
     const personDetails = (
       <ItemDetails itemId={11} getData={getPerson}>
         <Record field="gender" label="Gender" />
@@ -46,7 +55,15 @@ export default class App extends Component {
       <ErrorBoundry>
         <div className="stardb-app">
           <Header />
-          <Row left={personDetails} right={starshipDetails} />
+          {/* <Row left={personDetails} right={starshipDetails} /> */}
+          <ItemList getData={getAllPeople} onItemSelected={() => {}}>
+            {({ name }) => <span>{name}</span>}
+          </ItemList>
+
+          <ItemList getData={getAllPlanets} onItemSelected={() => {}}>
+            {({ name }) => <span>{name}</span>}
+          </ItemList>
+
           {/* {planet}
 
           <div className="row mb2 button-row">
