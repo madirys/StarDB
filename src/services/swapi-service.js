@@ -1,5 +1,6 @@
 export default class SwapiService {
   _apiBase = "https://swapi.co/api";
+  _imageBase = "https://starwars-visualguide.com/assets/img";
 
   getResource = async url => {
     const res = await fetch(`${this._apiBase}${url}`);
@@ -36,7 +37,7 @@ export default class SwapiService {
   };
 
   getStarship = async id => {
-    const starship = this.getResource(`/starships/${id}/`);
+    const starship = await this.getResource(`/starships/${id}/`);
     return this._transformStarship(starship);
   };
 
@@ -56,8 +57,11 @@ export default class SwapiService {
   };
 
   _transformStarship = starship => {
+    const id = this._extractId(starship);
+    const image = `${this._imageBase}/starships/${id}.jpg`;
     return {
-      id: this._extractId(starship),
+      id,
+      image,
       name: starship.name,
       model: starship.model,
       manufacturer: starship.manufacturer,
@@ -70,8 +74,11 @@ export default class SwapiService {
   };
 
   _transformPerson = person => {
+    const id = this._extractId(person);
+    const image = `${this._imageBase}/characters/${id}.jpg`;
     return {
-      id: this._extractId(person),
+      id,
+      image,
       name: person.name,
       gender: person.gender,
       birthYear: person.birth_year,

@@ -12,22 +12,22 @@ export default class ItemDetails extends Component {
   };
 
   componentDidMount() {
-    this.updatePerson();
+    this.updateItem();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.itemId !== prevProps.itemId) {
-      this.updatePerson();
+      this.updateItem();
     }
   }
 
-  updatePerson() {
-    const { itemId } = this.props;
+  updateItem() {
+    const { itemId, getData } = this.props;
     if (!itemId) {
       return;
     }
 
-    this.swapiService.getPerson(itemId).then(item => {
+    getData(itemId).then(item => {
       this.setState({ item });
     });
   }
@@ -38,18 +38,14 @@ export default class ItemDetails extends Component {
       return <span>Select a item from a list</span>;
     }
 
-    const { id, name, gender, birthYear, eyeColor } = item;
+    const { image, name, gender, birthYear, eyeColor } = item;
 
     return (
       <div className="item-details card">
-        <img
-          className="item-image"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-          alt="character"
-        />
+        <img className="item-image" src={image} alt="character" />
 
         <div className="card-body">
-          <h4>{name}</h4>
+          <h5>{name}</h5>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
               <span className="term">Gender</span>
