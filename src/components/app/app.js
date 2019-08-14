@@ -16,7 +16,7 @@ import {
 import "./app.css";
 
 export default class App extends Component {
-  swapiService = new SwapiService();
+  swapiService = new SwapiService(); // now you can easily switch to dummy data for tests
 
   state = {
     showRandomPlanet: true
