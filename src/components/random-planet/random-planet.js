@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { number } from "prop-types";
 
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
@@ -11,6 +12,10 @@ export default class RandomPlanet extends Component {
 
   static defaultProps = {
     updatePlanetInterval: 10000
+  };
+
+  static propTypes = {
+    updatePlanetInterval: number
   };
 
   state = {
