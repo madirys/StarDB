@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-
-import SwapiService from "../../services/swapi-service";
-import { SwapiServiceProvider } from "../swapi-service-context";
 import Header from "../header";
 import ErrorBoundry from "../error-boundry";
+
+import { SwapiServiceProvider } from "../swapi-service-context";
+import SwapiService from "../../services/swapi-service";
+import DummySwapiService from "../../services/dummy-swapi-service";
+
 import {
   PersonList,
   PlanetList,
@@ -16,10 +18,17 @@ import {
 import "./app.css";
 
 export default class App extends Component {
-  swapiService = new SwapiService(); // now you can easily switch to dummy data for tests
-
   state = {
-    showRandomPlanet: true
+    showRandomPlanet: true,
+    swapiService: new DummySwapiService()
+  };
+
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service =
+        swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+      return { swapiService: new Service() };
+    });
   };
 
   toggleRandomPlanet = () => {
@@ -33,9 +42,9 @@ export default class App extends Component {
   render() {
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div className="stardb-app">
-            <Header />
+            <Header onServiceChange={this.onServiceChange} />
             <PersonDetails itemId={11} />
             <PlanetDetails itemId={5} />
             <StarshipDetails itemId={9} />
