@@ -47,8 +47,11 @@ export default class SwapiService {
   };
 
   _transformPlanet = planet => {
+    const id = this._extractId(planet);
+    const image = `${this._imageBase}/planets/${id}.jpg`;
     return {
-      id: this._extractId(planet),
+      id,
+      image,
       name: planet.name,
       population: planet.population,
       rotationPeriod: planet.rotation_period,
