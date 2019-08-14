@@ -6,15 +6,29 @@ const withData = View => {
   return class extends Component {
     state = {
       data: null,
+      loading: true,
       hasError: false
     };
 
     updateList() {
-      this.props.getData().then(data => {
-        this.setState({
-          data
-        });
+      this.setState({
+        loading: true,
+        hasError: false
       });
+      this.props
+        .getData()
+        .then(data => {
+          this.setState({
+            data,
+            loading: false
+          });
+        })
+        .catch(() => {
+          this.setState({
+            hasError: true,
+            loading: false
+          });
+        });
     }
 
     componentDidMount() {
@@ -32,11 +46,12 @@ const withData = View => {
     }
 
     render() {
-      const { data, hasError } = this.state;
+      const { data, hasError, loading } = this.state;
 
-      if (!data) {
+      if (loading) {
         return <Spinner />;
-      } else if (hasError) {
+      }
+      if (hasError) {
         return <ErrorIndicator />;
       }
       return <View {...this.props} data={data} />;
