@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import SwapiService from "../../services/swapi-service";
+import { SwapiServiceProvider } from "../swapi-service-context";
 import Header from "../header";
 import ErrorBoundry from "../error-boundry";
 import {
@@ -32,16 +33,18 @@ export default class App extends Component {
   render() {
     return (
       <ErrorBoundry>
-        <div className="stardb-app">
-          <Header />
-          <PersonDetails itemId={11} />
-          <PlanetDetails itemId={5} />
-          <StarshipDetails itemId={9} />
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="stardb-app">
+            <Header />
+            <PersonDetails itemId={11} />
+            <PlanetDetails itemId={5} />
+            <StarshipDetails itemId={9} />
 
-          <PersonList />
-          <StarshipList />
-          <PlanetList />
-        </div>
+            <PersonList />
+            <StarshipList />
+            <PlanetList />
+          </div>
+        </SwapiServiceProvider>
       </ErrorBoundry>
     );
   }
