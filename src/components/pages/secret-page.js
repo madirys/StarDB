@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 const SecretPage = ({ isLoggedIn }) => {
   if (isLoggedIn) {
@@ -8,7 +9,7 @@ const SecretPage = ({ isLoggedIn }) => {
       </div>
     );
   }
-  return <p>You shoud not see this!</p>;
+  return <Redirect to="/login" />;
 };
 
 export default SecretPage;
